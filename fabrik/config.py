@@ -14,10 +14,10 @@ IPV4_RE     = re.compile(r'^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[
 COBBLER_SERVER = 'localhost.localdomain'
 # ensure this user exists in your cobbler users.digest
 # or central auth DB , whatever cobbler uses...
-# COBBLERUSER = "xmlrpc"
-# COBBLERPASS = "r3dhat01"
+# COBBLERUSER = "someuser"
+# COBBLERPASS = "somepass"
 COBBLERUSER = "xmlrpc"
-COBBLERPASS = "r3dhat01"
+COBBLERPASS = "password"
 
 ## ------------------ Networking Variables --------------------- ##
 # to allow for different cabling setups

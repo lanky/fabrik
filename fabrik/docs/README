@@ -68,7 +68,7 @@ http://www.jquery.org
     # once authenticated we fall back to this:
     # future versions may use pass-through.
     COBBLERUSER = "xmlrpc"
-    COBBLERPASS = "r3dhat01"
+    COBBLERPASS = "password"
 
     # destdir for ISO images
     ISODIR = '/var/www/html/pub'
