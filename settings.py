@@ -1,8 +1,13 @@
 # Django settings for webapps projects
 import os
+
+# allows for easy relocation without rewriting everything:
 ROOT_PATH = os.path.dirname(__file__)
 
-DEBUG = True
+# this gives a seriously in-depth error page on breakage:
+# DEBUG = True
+# whereas this just returns a std 500 page:
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -37,6 +42,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
+# this is TOPDIR/media, or http://yourhost/media
 MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
 # ADMIN_MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
 # FABRIK_MEDIA_ROOT = '/opt/app/django/apps/fabrik/media/'
@@ -88,7 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.admin',
+#    'django.contrib.admin',
     'fabrik',
 )
 CACHE_BACKEND = 'dummy://'
