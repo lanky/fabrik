@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-/W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http:/www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--
+############################################################################################
+#
+#       main.tmpl
+#
+# 
+#       The master HTML template, extended by all other templates in use
+#
+#
+#
+#
+############################################################################################
+-->
+<head>
+<link rel="stylesheet" type="text/css" href="/media/css/fabrik.css">
+{% block stylesheets %}
+{% endblock %}
+<title>{% block title %}Custom SBRF implementation for cobbler2 (beta){% endblock %}</title>
+<script type="text/javascript" src='/media/js/jquery-1.4.2.min.js'></script>
+<script type="text/javascript" src='/media/js/fabrik.js'></script>
+<script type="text/javascript" src='/media/js/jquery.json-2.2.min.js'></script>
+{% block scripts %}{% endblock %}
+</head>
+<div id="masthead">
+<!--  <img src="/media/img/companylogo.gif" alt="Company Logo" /> -->
+<ul id="navbar">
+<li><a href="/apps/fabrik/list" title="List All System Records" id="listsystems">Existing Systems</a></li>
+<li><a href="/apps/fabrik/add" title="Create New System Records" id="addsystem">New System</a></li>
+<li><a href="/apps/fabrik/iso" title="Generate Bootable ISO images" id="createiso">ISO Images</a></li>
+{% block navbar %}{% endblock %}
+</ul>
+</div>
+<span id="currentuser">
+{% if remoteuser %}
+Logged in as {{ remoteuser }}
+{% endif %}
+</span>
+<div id="content">
+{% block content %}{% endblock %}
+</div>
+<body>
+</body>
+</html>

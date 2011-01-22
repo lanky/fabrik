@@ -1,0 +1,44 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+# 
+#       system_delete.tmpl
+#
+#        Template HTML file
+#        Used during the system record deletion process
+#        provides a drop-down list to select system for deletion.
+#        This file is under subversion control
+#
+#        No longer in use - systems deletion has gone all AJAXy from the system_table.
+#
+############################################################################################
+-->
+
+{% block title %}Fabrik - Delete System Record{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$( function() {    
+    $('#delsystem').addClass('current');
+
+});
+
+</script>
+{% endblock %}
+{% block content %}
+<p>Choose a system from the list below and click the button to delete it from the database.<br/>
+You will be asked to confirm your choice on the next screen.</p>
+<div id="formwrapper">
+<table>
+<form action="." method="post">
+<tr><th class="header" colspan="3">{{ form.systemname.label_tag }}</th></tr>
+<tr>
+<td>{{ form.systemname }}</td>
+<td><span class="errors">{{ form.systemname.errors }}</span></td>
+</ul></td>
+<tr>
+<tr><td><input type="submit" value="Delete" class="button"></td></tr>
+</form>
+</table>
+</div>
+
+{% endblock %}

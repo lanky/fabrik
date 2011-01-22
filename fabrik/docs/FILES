@@ -1,0 +1,45 @@
+|-- README
+|-- __init__.py
+|-- cobblerweb.py
+|-- config.py
+|-- djangosession.py
+|-- docs
+|   |-- FILES
+|   |-- INSTALL
+|   `-- README
+|-- forms.py
+|-- models.py
+|-- patterns.conf
+|-- snippets
+|   |-- README
+|   |-- __init__.py
+|   |-- auth_decorator.py
+|   |-- betterforms.py
+|   |-- formsetform.py
+|   `-- smartiftag.py
+|-- templates
+|   |-- README
+|   |-- delete_confirm.tmpl
+|   |-- delete_summary.tmpl
+|   |-- iso_create.tmpl
+|   |-- iso_summary.tmpl
+|   |-- main.tmpl
+|   |-- system_add.tmpl
+|   |-- system_delete.tmpl
+|   |-- system_edit.tmpl
+|   |-- system_list.tmpl
+|   |-- system_summary.tmpl
+|   `-- system_test.tmpl
+|-- templatetags
+|   |-- __init__.py
+|   |-- customtags.py
+|   `-- log.py
+|-- urls.py
+|-- urls.py.orig
+|-- utils.py
+`-- views
+    |-- __init__.py
+    |-- ajax.py
+    |-- auth.py
+    |-- orig.py
+    `-- std.py

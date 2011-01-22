@@ -1,0 +1,102 @@
+/*
+# This file contains the CSS tag and class definitions used in the fabrik
+# web interface.
+# Under subversion control
+# Uncomment the border settings for layout debugging if reqd
+*/
+
+/*global settings, to centre content and set backgrounds*/
+html {margin: 0; padding: 0;height: 100%;}
+body {margin: 0; padding: 0;
+        font-family: "Trebuchet MS", "Bitstream Vera Sans", verdana, lucida, arial, helvetica, sans-serif;
+        margin-left: 20px; width: 800px; min-height: 600px ; font-size: small;}
+
+/*header bar possibly with logo*/
+#masthead { margin: 0px; padding: 10px; position: relative; top:0; min-height: 20px;
+         background: url(../img/darkbluebg.gif); background-repeat: repeat;}
+#masthead img { position: relative; top: 0; left: 0;}
+
+/*main navigation menu*/
+#navbar { white-space:nowrap; margin: 0; padding:0; font-size: small;
+          font-family: "Trebuchet MS", "Bitstream Vera Sans", verdana, lucida, arial, helvetica, sans-serif;
+          margin: 0 20px; position: absolute; left: 100px; top: 10px; }
+#navbar a {text-decoration: none; color: #838383; padding: 0 8px;
+        display: block; text-align:center;}
+#navbar li {float: left; border: 0px; list-style: none; margin:0;
+            padding:0; width: 10em; /*border: 1px solid #838383;*/ }
+#navbar li a:hover {/*background: #FEA;*/ color: yellow;}
+#navbar li a.current {color: white; }
+
+#currentuser { /* color: white; */ float: right;}
+
+/* Errors div at top when required */
+#errors li { list-style-type: none; color: red; padding: 0; margin: 0 }
+#errors ul {padding:0; list-style-type: none; text-align: left; margin-left: 0;}
+
+/* form wrapper class for styling forms*/
+#formwrapper {padding: 0px; width: 100%; text-align: left; float: left;
+/*            border: 1px dotted gray ;*/ }
+#formwrapper table { width:100%; vertical-align: top;
+/*            border-collapse; border: 1px dotted gray*/ ; }
+#formwrapper input.textinput { width: 200px; }
+#formwrapper th { text-align: right; width: 200px; vertical-align: top;
+/*            border: 1px dotted gray; */ }
+#formwrapper th.header { text-align: left; /*width: 100%*/; vertical-align: top;
+/*            border: 1px dotted gray;*/ }
+
+#formwrapper th.oneline { text-align: left; width: auto; vertical-align: top;
+/*            border: 1px dotted gray; */ }
+#formwrapper td { /*width:auto */; vertical-align: top;
+/*            border: 1px dotted blue; */ }
+#formwrapper ul {padding:0; list-style-type: none; text-align: left; margin-left: 0;}
+#formwrapper li {list-style-type: none; text-align: left;margin:0; padding:0;}
+/* colour RED for errors */
+.errors {color: red; padding:0; margin: 0;}
+
+#formwrapper th.data { width: auto; text-align: left; vertical-align: top; }
+#formwrapper td.data { width:auto ; vertical-align: top; }
+
+#advanced th { text-align: left; width: 200px; }
+#advanced td {width: auto;}
+
+.heading { cursor:pointer; display:block;  background: url(../img/darkbluebg.gif);
+           background-repeat: repeat; width:100%; padding: 2px; margin: 2px; color: white; };
+
+
+/* Smooth Grey Buttons */
+button {
+/*    display: block; */
+/*    float: left; */
+    background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+
+    font-size:100%;
+ /*   line-height:130%; */
+    text-decoration:none;
+ /*   font-weight:bold; */
+    color:#565656;
+    cursor:pointer;
+/*    padding:5px 10px 6px 7px;  */
+}
+button {
+    width:auto;
+    overflow:visible;
+/*    padding:4px 10px 3px 7px;  */
+} 
+button[type]{
+/*    padding:5px 10px 5px 7px; */
+    line-height:17px;
+}
+*:first-child+html button[type]{
+/*    padding:4px 10px 3px 7px;  */
+}
+button img, .buttons a img {
+    margin:0 3px -3px 0 !important;
+    padding:0;
+    border:none;
+    width:16px;
+    height:16px;
+} 
+

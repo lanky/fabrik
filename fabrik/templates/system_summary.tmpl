@@ -1,0 +1,54 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+#        system_summary.tmpl
+#
+#        Template HTML file
+#        Displays a summary of a succesfully created system record
+#        and optionally the location of a generated ISO image
+#
+#
+############################################################################################
+-->
+
+{% block title %}Fabrik - New System Record Created{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<p>A new system record has been created with the following details</p>
+<hr/>
+<div id="formwrapper">
+<table>
+<tr>
+<th>System Hostname :</th><td>{{ form.name }}</td>
+</tr>
+<tr>
+{% if form.ip_address %}
+<th>System IP:</th><td>{{ form.ip_address }}</td>
+{% else %}
+<th>System IP:</th><td>Allocated using DHCP</td>
+{% endif %}
+</tr>
+<tr>
+<th>System Profile:</th><td>{{ form.profile }}</td>
+</tr>
+{% if form.gen_iso %}
+<tr>
+<th>ISO Image Information :</th>
+<td><a href="http:/{{ cobbler_server }}/{{iso_root }}/{{ form.iso_name }}">http://{{ cobbler_server }}/{{iso_root }}/{{ form.iso_name }}</a></td>
+</tr>
+{% endif %}
+<!-- for debuggery purposes -->
+<tr>
+<th>Disk Layout:</th>
+{% if form.customlayout %}
+<td>{{ form.customlayout|safe }}</td>
+{% else %}
+<td>{{ form.disksnippet }}</td>
+{% endif %}
+</tr>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+#
+#
+#     iso_summary.tmpl
+#
+#     template HTML file
+#     Used during the system boot ISO generation process
+#     provides summary information and a link to the generated ISO image
+#
+#
+#
+############################################################################################
+-->
+
+{% block title %}Fabrik - ISO Image generation results{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(function() {
+    $('#createiso').addClass('current');
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>ISO Image Generated</h1>
+<hr/>
+<div id="formwrapper">
+<table>
+<tr valign="top"><th>Systems:</th><td>{{ systems }}</td>
+<tr valign="top"><th>Profiles:</th><td>{{ profiles }}</td>
+<tr>
+<th>ISO Image Location :</th>
+<td><a href="http://{{ cobbler_server }}{{ iso_root }}/{{ iso_name }}">http://{{ cobbler_server }}{{ iso_root }}/{{ iso_name }}</a></td>
+</tr>
+</table>
+</div>
+{% endblock %}

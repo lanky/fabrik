@@ -1,0 +1,35 @@
+README for fabrik/templates directory
+
+templates in use by fabrik interface
+These could arguably be simplified a little.
+The .tmpl extension is purely arbitrary - many examples use.html
+
+* main.tmpl
+  - the global template inherited by the others.
+
+# system record creation templates
+* system_add.tmpl
+  - create new system record
+* systemsummary.tmpl
+  - summary form post-creation
+
+# system deletion templates
+* system_delete.tmpl
+  - choose a system to delete
+* delete_confirm.tmpl
+  - do you really mean it?
+* delete_result.tmpl
+  - did it work?
+
+# ISO image generation
+* iso_create.tmpl
+  - pick a system(s) and or profile(s) to add to your ISO image.
+* isosummary.tmpl
+  - was the ISO successfully generated, plus a download link.
+
+
+* findsystem.tmpl
+* systemlist.tmpl
+  - not currently used
+
+

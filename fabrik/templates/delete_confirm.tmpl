@@ -1,0 +1,79 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+#
+#    delete_confirm.tmpl
+#    Template for the 'do you really want to delete this system' page
+#     
+#    This is now handled by a JS pop-up so may no longer be reqd
+# 
+# 
+#
+# 
+############################################################################################
+-->
+
+{% block title %}Fabrik - Confirm System Deletion{% endblock %}
+
+{% block navbar %}
+<li><a href="/apps/fabrik/" title="Create New System Records">Add System</a></li>
+<li><a href="/apps/fabrik/delsystem" class="current" title="Delete Existing System Records">Delete System</a></li>
+<li><a href="/apps/fabrik/listsystems" title="List All System Records">List Systems</a></li>
+<li><a href="/apps/fabrik/buildiso" title="Generate Bootable ISO images">Create ISO</a></li>
+{% endblock %}
+
+{% block content %}
+<p>{{ form.message|default:"Really delete the following system?" }}</p>
+<div id="formwrapper">
+<table>
+<form action="" method="post">
+<input type="hidden" name="confirmed" value="{{ confirmed }}" />
+<!-- The only information we require for deletion is the system name -->
+<input type="hidden" name="systemname" value="{{ form.systemname }}" />
+<input type="hidden" name="details" value="{{ form }}" />
+<tr>
+<th>Name:</th>
+<td>{{ form.name }}</td>
+<td><span class="errors">{{ form.name.errors }}</span></td>
+</ul></td>
+</tr>
+<tr>
+<th >Profile:</th>
+<td>{{ form.profile }}</td>
+<td><span class="errors">{{ form.profile.errors }}</span></td>
+</ul></td>
+</tr>
+<tr>
+<tr>
+<th>Primary IP:</th>
+<td>{{ form.primaryip }}</td>
+<td><span class="errors">{{ form.primaryip.errors }}</span></td>
+</ul></td>
+</tr>
+<tr>
+<th>Backup IP:</th>
+<td>{{ form.backupip }}</td>
+<td><span class="errors">{{ form.backupip.errors }}</span></td>
+</ul></td>
+</tr>
+<tr>
+<th>Datacenter:</th>
+<td>{{ form.datacenter }}</td>
+<td><span class="errors">{{ form.datacenter.errors }}</span></td>
+</ul></td>
+</tr>
+<tr>
+<th>NIS Domain:</th>
+<td>{{ form.nisdomain }}</td>
+<td><span class="errors">{{ form.nisdomain.errors }}</span></td>
+</ul></td>
+</tr>
+<!-- <tr><td><input type="submit" value="Delete" class="button"></td></tr> -->
+<tr><td><input type="submit" value="Delete System"/></td><td><a href="/apps/fabrik/delsystem">Cancel</a></td></tr>
+</form>
+</form>
+</table>
+</div>
+
+
+{% endblock %}

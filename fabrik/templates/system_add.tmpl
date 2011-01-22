@@ -1,0 +1,182 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+# 
+#    system_add.tmpl 
+# 
+#    django HTML template
+#    used to add new systems. Uses a lot of custom javascript
+#
+############################################################################################
+-->
+{% block title %}Add New System{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="/media/js/fabrik.js" ></script>
+<script type="text/javascript" src="/media/js/jquery.json-2.2.min.js" ></script>
+<script type="text/javascript">
+// right, it seems just about everything has to go in the document.ready function, so:
+// actually the point is not to run any of the javscript until the document is loaded.
+$(function(){
+    // add appropriate menu highlight
+    $('#addsystem').addClass('current');
+// populateSelect, LookupIP, fetchFile, enable/disableFields etc are all
+// from the 'localajax.js' script above.
+// prevent the 'enter' key in 
+    disableEnterKey();
+    // bind tab or enter in the 'domain' field to lookup IP info.
+    $('#id_domain').bind("keypress", function(e){
+        if ( e.keyCode == 13 || e.keyCode == 9) {
+            if ( $('#id_name').val() == '' || $('#id_domain').val() == ''  ) {
+                alert('Either hostname or domain are blank.');
+            }
+            else {
+                lookupIP($('#id_name').val() + '.' + $('#id_domain').val())
+            }
+        }
+        });
+  // set some basic states
+  // $('#id_togglelayout').removeAttr('disabled')
+
+  // populate the profiles list from cobbler
+    populateSelect('/apps/fabrik/ajax/profiles/list', '#id_profile')
+
+  // populate the disk layouts drop-down list
+    populateSelect('/apps/fabrik/ajax/layouts/list', '#id_disksnippet')
+
+  // disksnippet live lookup from on-disk file.    
+    $('#id_disksnippet').change( function(){
+        // key = $("#id_disksnippet :selected").val()
+        var layoutname = $("#id_disksnippet :selected").val();
+        fetchFile('/apps/fabrik/ajax/layouts/get', layoutname, '#id_customlayout')
+        });
+
+  // if we have selected a profile with disksnippet or customlayout specified, we should 
+  // ensure that the correct choice is set in the disksnippet or customlayout fields
+     $('#id_profile').change( function(){
+        var profname = $.toJSON({'profilename' : $('#id_profile').val()});
+        $.getJSON('/apps/fabrik/ajax/profiles/layout/' + $('#id_profile').val() , function(data) {
+           if(data.Type == "disksnippet"){
+           //        alert("disksnippet:\n" + data.Data );
+                   $('#id_togglelayout').attr('checked', false);
+                   $('#id_customlayout').text('disabled').attr('disabled', true);
+                   $('#id_disksnippet').attr('disabled', false).val(data.Data).select();
+           }
+           else if (data.Type == "customlayout"){
+           //        alert("customlayout:\n" + data.Data);
+                   $('#id_disksnippet').attr('disabled', true);
+                   $('#id_customlayout').text(data.Data).removeAttr('disabled');
+                   $('#id_togglelayout').change().attr('checked', true);
+           }
+           else {
+               return true;
+           }
+       });
+});
+
+
+    // trigger the change event on select too.
+     $('#id_profile').select(function() { $('#id_profile').change()});
+
+  // toggle manual disk layout area    
+    $('#id_togglelayout').change( function() {
+        disableFields('#id_togglelayout', [ '#id_disksnippet'])
+        enableFields('#id_togglelayout', [ '#id_customlayout'])
+        });
+
+  // toggle the customrepo field with a checkbox 
+    $('#id_repoenable').change( function(){
+        enableFields('#id_repoenable', [ '#id_customrepo' ]);
+        });
+
+  // toggle the profile settings (disables networking etc)
+    $('#id_save_profile').change( function(){
+        disableFields('#id_save_profile', [ '#id_domain', '#id_ip_address', '#id_subnet', '#id_gateway'])
+        });
+
+    $('#savelayout').click( function() {
+        var layoutinfo = $.toJSON({ name: $('#id_layout_name').val(), layout: $('#id_customlayout').val()});
+        // now moved to fabrik.js
+        saveLayout(layoutinfo);
+        // update the layouts select box
+        populateSelect('/apps/fabrik/layouts/list', '#id_disksnippet');
+        });
+// since we disabled submission by hitting enter... make it work with a button.
+    $('#submit_form').click( function() {
+        $('#formwrapper > form').submit();
+        });
+
+    // $(".content").hide();
+    $(".heading").click(function() {
+        $(this).next("div.content").slideToggle(500);
+    });
+    
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="formwrapper">
+  <form action="" method="post">
+    <h1>Add a new system record</h1>
+    Use this form to create a new system record in cobbler<br/>
+    The different sections can be collapsed or expanded by clicking on their headers
+    <p><b>A few notes:</b><br/>
+    &nbsp; * This interface does not allow editing of existing systems yet. Please delete the existing record via the 'Existing Systems' link or check the 'Replace existing system' box<br/>
+    &nbsp; * Hitting the tab or enter keys in the Domain field will perfom a DNS lookup, combining Hostname and Domain and fill in the IP address field if successful.
+    Fill this in <b>before the IP Address field</b> or your painstakingly-typed IP address will be replaced.<br/>
+    &nbsp; * Internet Explorer will show all the text that appears in the 'Manual Disk Layout' area on one line, until you edit it. This is out of our hands. Check your warranty.</p>
+    <p>For more advanced settings, use the main cobbler interface.</p>
+    <h2 class="heading">System Information</h2>
+    <div id="ks_system" class="content">
+      <table>
+{% for fieldset in form.fieldsets %}
+  {% ifequal fieldset.name 'system' %}
+    {% for field in fieldset %}
+        <tr><th>{{ field.label_tag }}</th> <td title="{{ field.help_text }}">{{ field }}</td><td class="errors">{{ field.errors|striptags }}</td></tr>
+    {% endfor %}
+  {% endifequal %}
+{% endfor %}
+      </table>
+    </div> <!-- ks_system -->
+
+    <h2 class="heading">Common Profile Settings</h2>
+    <div id="ks_cobbler" class="content">
+      <table>
+{% for fieldset in form.fieldsets %}
+  {% ifequal fieldset.name 'cobbler' %}
+    {% for field in fieldset %}
+        <tr><th>{{ field.label_tag }}</th> <td title="{{ field.help_text }}">{{ field }}</td><td class="errors">{{ field.errors|striptags }}</td></tr>
+    {% endfor %}
+  {% endifequal %}
+{% endfor %}
+<!-- These 2 have spefic layout needs... -->
+        <tr>
+          <th>{{ form.customlayout.label_tag }}:</th>
+          <td colspan="2" title="{{ form.customlayout.help_text }}">{{ form.customlayout }}</td>
+        </tr>
+        <tr>
+          <th>{{ form.layout_name.label_tag }}:</th>
+          <td title="{{ form.layout_name.help_text }}">{{ form.layout_name }}
+          <button type="button" id="savelayout" value="save">Save</button></td>
+        </tr>
+      </table>
+    </div> <!-- cobbler -->
+
+    <h2 class="heading">Advanced kickstart options</h2>
+    <div id="ks_advanced" class="content">
+      <table>
+{% for fieldset in form.fieldsets %}
+  {% ifequal fieldset.name 'advanced' %}
+    {% for field in fieldset %}
+        <tr><th>{{ field.label_tag }}</th> <td title="{{ field.help_text }}">{{ field }}</td><td class="errors">{{ field.errors|striptags }}</td></tr>
+    {% endfor %}
+  {% endifequal %}
+{% endfor %}
+      </table>
+    </div><!-- advanced settings -->
+    <table>
+      <tr><td><input id="submit_form" type="submit" value="Submit" class="button"></td></tr>
+    </table>
+    </form>
+</div> <!-- forwrapper-->
+{% endblock %}

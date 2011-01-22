@@ -1,0 +1,64 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+#
+#
+#       iso_create.tmpl
+#
+#       fancy new js-populated and jQuery-powered ISO generation template
+#
+#
+#
+#
+############################################################################################
+-->
+{% block title %}Fabrik - Generate Boot ISO Image{% endblock %}
+{% block scripts %}
+<!-- link rel="stylesheet" type="text/css" href="/media/css/ui.multiselect.css" /-->
+<link rel="stylesheet" type="text/css" href="/media/css/fabrik.css">
+<link rel="stylesheet" type="text/css" href="/media/css/jquery.bsmselect.css">
+<! --<link rel="stylesheet" type="text/css" href="/media/css/ui.multiselect.css"> -->
+
+<script type="text/javascript" src="/media/js/jquery.bsmselect.js"></script>
+<script type="text/javascript" src="/media/js/jquery.bsmselect.sortable.js"></script>
+<script type="text/javascript" src="/media/js/jquery.bsmselect.compatibility.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    // add the appropriate menu highlight.
+    $('#createiso').addClass('current');
+
+    // let the button submit the form:
+    $('#submit_form').click( function() {
+        $('#isoform').submit();
+        });
+    // configure the systems and profiles drop-down boxes as bsmselects
+    // this function is in our shared JS file
+    populateBSMSelect('/apps/fabrik/ajax/systems/list', '#id_systems');
+    populateBSMSelect('/apps/fabrik/ajax/profiles/list', '#id_profiles');
+
+/* end of document ready script */    
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>ISO image generator</h2>
+<p>Please select systems (and optionally profiles) from the lists below and click the button to create a new ISO image.<br/>
+The ISO image will be named as specified below. if no name is supplied, it will use the name of the first selected system ( or the first profile if no systems are selected).<br/>
+Any existing ISO images of the same name in the target directory will be replaced.<br/>
+If successfully generated, you will be given a link to the ISO image file.</p>
+<form action="." method="post" id="isoform">
+<h3>{{ form.systems.label_tag }}</h3>
+{{ form.systems }}
+<hr>
+<h3>{{ form.profiles.label_tag }}</h3>
+<p>Selecting profiles allows you to install multiple systems with the same ISO image, although this will require that you provide networking information on the kernel commandline when booting from the CD image.</p>
+{{ form.profiles }}
+<hr>
+<h3>ISO Name</h3>
+{{ form.ISOname }}
+(Optional. If omitted, will use the first system or profile selected above)
+</form>
+<hr/>
+<button id="submit_form">Create ISO</button>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "main.tmpl" %}
+<!--
+############################################################################################
+#       system_list.tmpl
+#
+#        Template HTML file
+#        Used to display a tabular list of existing system records.
+#        Currently this is not very AJAXy - the data is fetched once
+#        on page load from cobbler
+#
+############################################################################################
+-->
+
+{% block title %}Fabrik - List Systems{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="/media/js/localajax.js"></script>
+<script type="text/javascript" src="/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/media/js/jquery.json-2.2.min.js" ></script>
+<script type="text/javascript">
+$(function() {
+    $('#listsystems').addClass('current');
+    // convert the existing list of systems to a fancy table...
+    $('#systable').dataTable({
+        "sDom" : '<"filter"fl><"info"i><"tablewrapper"t>',
+    });
+    $('.striped tr:even').addClass("alt");
+    $('th').addClass('header data');
+    $('td').addClass('data');
+}); // end doc ready
+</script>
+<!-- this should be moved out into a centrally sourced file -->
+<style type="text/css">
+/*.top {position: relative; top: 5px; padding: 2px; }*/
+.top { padding: 5px ; margin: 10px; min-height: 20px;}
+#filter { width: 100%; background: #336699; border: 2px solid red;}
+#info { width: 100%;  padding: 10px;}
+#systable_info { width: 100%;}
+#systable_filter {width: 50%;}
+#systable_length { width: 50%; float: right;}
+#systable { margin-top: 20px; float: left;}
+.action { text-decoration: none; color: blue; }
+.action:hover { text-decoration: underline; color:red; cursor: pointer;}
+.selectbox { cursor: pointer;}
+
+tr.alt td {background: #ecf6fc; }
+tr { border-bottom: 1px dotted #336699; }
+th.tickme { width : 30px; text-align: left;}
+th { font-weight: bold; text-align: left;}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Existing System Records</h1>
+<p>
+Systems currently defined on cobbler server {{ COBBLER_SERVER }}<br/>
+Systems may be searched for by typing into the <b>Search</b> field. This will match against both system and profile names.
+</p>
+<hr/>
+<div id="formwrapper">
+<table id="systable" class="striped">
+<thead>
+<tr>
+<!-- <th class="tickme"><span class="selectall" title="select/deselect all visible rows">Select All</span></th> -->
+<th>System Name</th>
+<th>Profile</th>
+<th>Network Interfaces</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="system_list">
+{% for line in data %}
+<tr>
+<!-- <td class="tickme"><input type="checkbox" id="#{{line.name}}" class="selectbox" style="cursor:pointer"></input></td> -->
+<td>{{ line.name }}</td>
+<td>{{ line.profile }}</td>
+<td>
+{% if line.ipinfo %}
+{% for iface in line.ipinfo %}
+{{ iface.nic }} : {{ iface.ipaddr }}<br/>
+{% endfor %}
+{% endif %}
+</td>
+<td>
+|<span class="action" onclick="delSystem('{{line.name}}')" title="Delete this system. You will be prompted for confirmation">Delete</span>
+|<span class="action" onclick="renameSystem('{{line.name}}')" title="Rename this system.">Rename</span>
+|<span class="action" onclick="makeProfile('{{line.name}}')" title="Convert this system to a cobbler profile">Make Profile</span>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<hr>
+</div>
+
+{% endblock %}
