@@ -1,21 +1,10 @@
-#################################### SUBVERSION HEADER #####################################
-# $Id$
-# This file is under subversion control
-#
-# Last Edited by: $Author$
-# Modified on: $Date$
-# $Rev$
-# $URL$
-#
-# $Log$
-############################################################################################
 This directory contains the key python code for the fabrik web interface.
 
 ## key Python files
 * urls.py
   - maps URL patterns to functions in views.py
 
-* views.py
+* views/*.py
   - generates forms and other pages, rendering them using the given templates 
 
 * forms.py
@@ -24,6 +13,7 @@ This directory contains the key python code for the fabrik web interface.
 
 * utils.py
   - custom utility code for reuse in views
+
 * cobblerweb.py
   - an abstraction of some elements of the Cobbler XMLRPC API
 	This includes methods to produce output in a form consumable by django
