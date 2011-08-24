@@ -154,9 +154,9 @@ class CobblerWebApi:
 
         sysinfo = {'comment': 'My shiny new system',
         'gateway': '28.97.72.1',
-        'hostname': 'lonrs06004.fm.rbsgrp.net',
+        'hostname': 'systemname.domain.tld',
         'mgmt_classes': ['puppet::client'],
-        'name': 'lonrs06002',
+        'name': 'systemname',
         'name_servers': ['147.114.195.220', '147.114.10.40', '11.160.32.59'],
         'profile': 'rhel54-core',
         'interfaces': {
