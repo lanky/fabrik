@@ -161,7 +161,7 @@ class CobblerWebApi:
         'profile': 'rhel54-core',
         'interfaces': {
                        'eth0': {
-                                'dns_name': 'lonrs06002.fm.rbsgrp.net',
+                                'dns_name': 'systemname.domain.tld',
                                 'ip_address': '28.97.72.33',
                                 'mac_address': '01:02:03:04:05:06',
                                 'static': True,
