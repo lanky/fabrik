@@ -1,27 +1,38 @@
-# README for /opt/webapps/media/js directory
+README
+======
+
+for the /media/js directory
+
 This directory contains the javascript code used by the fabrik interface
 At time of writing this included...
-# jquery , jquery-ui and plugins:
-jquery-1.4.2.min.js
-jquery-ui-1.8.6.custom.min.js
 
-# bsmselect is used for the create ISO page:
-jquery.bsmselect.compatibility.js
-jquery.bsmselect.js
-jquery.bsmselect.sortable.js
+jquery , jquery-ui and plugins
+------------------------------
 
-# datatables provides the searchable and sortable system list
-jquery.dataTables.min.js
+* jquery-1.4.2.min.js
+* jquery-ui-1.8.6.custom.min.js
 
-# jquery-JSON provides the .toJSON function for AJAX posting
-jquery.json-2.2.min.js
+bsmselect is used for the create ISO page
+----------------------------------------=
 
-# custom local scripts (common functionality etc)
-fabrik.js
+* jquery.bsmselect.compatibility.js
+* jquery.bsmselect.js
+* jquery.bsmselect.sortable.js
 
-# saved for reference
-systemlist.js
-addsystem.js
+datatables
+----------
 
-# currently unused files in here (to be deleted):
-unused
+provides the searchable and sortable system list
+* jquery.dataTables.min.js
+
+* jquery-JSON provides the .toJSON function for AJAX posting
+* jquery.json-2.2.min.js
+
+custom local scripts (common functionality etc)
+----------------------------------------------
+* fabrik.js
+
+saved for reference
+------------------
+* systemlist.js
+* addsystem.js

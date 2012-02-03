@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 A smarter {% if %} tag for django templates.
 

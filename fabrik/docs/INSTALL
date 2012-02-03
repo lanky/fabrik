@@ -1,37 +1,62 @@
-# deployment instructions.
-1. ensure the required software packages are installed. Some of these are from EPEL.
-   # the EPEL version of Django is older than this. Custom packages may be required.
-   # django builds easily enough on RHEL from the fedora src RPM
-   Django > 1.2
-   python
-   python-simplejson (for JSON conversions.)
-   httpd
-   mod_wsgi (the successor to mod_python)
-   cobbler >= 2.0.9 (2.0.10 is expected in the repos soon and 2.0.11 soon afterwards)
+Deployment instructions.
+========================
+
+For the time being these are manual, but eventually this will be packaged using
+python-distutils or setuptools
+
+Software Requirements
+---------------------
+
+**note**
+The EPEL version of Django is older than this. Custom packages may be required.
+django builds easily enough on RHEL from the fedora src RPM
+
+* Django > 1.2
+* python
+* On earlier versions of python you may require:
+* python-simplejson (for JSON conversions.)
+* httpd
+* mod_wsgi (the successor to mod_python)
+* cobbler >= 2.0.9 (2.0.10 is expected in the repos soon and 2.0.11 soon afterwards)
 
 
-1. checkout the fabrik 'trunk' branch somewhere safe (although directly into /opt/webapps also will be fine)
+Code Checkouts
+--------------
+Checkout the fabrik master (or a tag of your choice) branch somewhere safe
+(although directly into it's destination dir (default: /opt/webapps) also will be fine
 
+Filesystem Prep
+---------------
 
-2. create needed directories:
-# the install command allows me to specify perms and ownership upon creation
+The install command allows me to specify perms and ownership upon creation
+<pre>
 install -o root -g apache -m 2775 -d /var/www/html/pub
 install -g apache -m 2775  /var/lib/cobbler/snippets/disklayouts/custom
-# plus the Django root
-mkdir /opt/webapps
+install -d /opt/webapps
+</pre>
 
-3. Deploy files into the appropriate directories:
+Deploy files into the appropriate directories
+---------------------------------------------
+
+Here we are assuming you checked out fabrik somewhere other than its destination dir.
+<pre>
 cp -av fabrik/ media/ wsgi *.py /opt/webapps/
-(actually, it'd be simpler to copy everything into /opt/webapps, which ensures nothing is missing.)
+</pre>
 
-4. create the (currently) required xmlrpcuser in cobbler
-the default in config.py is xmlrpc/r3dhat01.
+Cobbler Preparation
+-------------------
+
+* create the (currently) required xmlrpcuser in cobbler
+The default in config.py is xmlrpc/r3dhat01.
 as long as they are the same there as in cobbler, all should be well.
 
-5. install snippets etc for cobbler.
+* deploy cobbler snippets
+These are not packaged with fabrik, as they are site-dependent
 
-6. (re)start apache/cobblerd
+* (re)start apache/cobblerd
 
-6. in your browser du jour, navigate to 
+Test It
+-------
+in your browser _du jour_, navigate to 
 http://yournewserver/apps/fabrik and be amazed.
 

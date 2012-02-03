@@ -1,10 +1,29 @@
 #!/usr/bin/env python
-# top-level module docs:
-"""
+# -*- coding: utf-8 -*-
+# Fabrik - a custom django/javascript frontend to cobbler
+#
+# Copyright 2009-2012 Stuart Sears
+#
+# This file is part of fabrik
+#
+# fabrik is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# fabrik is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with fabrik. If not, see http://www.gnu.org/licenses/.
+__doc__ = """
 apps.fabrik.utils
 a small python module to provide helper functions for the Fabrik
 web interface, mostly using the cobbler XMLRPC or local API functionality
 """
+__author__ = "Stuart Sears <stuart@sjsears.com>"
 
 ## ------------ module imports ------------------ ##
 import os

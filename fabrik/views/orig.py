@@ -1,4 +1,24 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Fabrik - a custom django/javascript frontend to cobbler
+#
+# Copyright 2009-2012 Stuart Sears
+#
+# This file is part of fabrik
+#
+# fabrik is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# fabrik is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with fabrik. If not, see http://www.gnu.org/licenses/.
+# top-level docstrings
 # standard module documentation:
 """
 views.py
@@ -14,7 +34,11 @@ import os
 
 # used for dumping errors if things go horribly wrong.
 # also used for serialiaztion of objects
-import simplejson
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 from fnmatch import fnmatch
 from operator import itemgetter
 
@@ -136,7 +160,7 @@ def rename_system(request):
     AJAXy callback for renaming systems
     """
     # check_auth(request)
-    data = simplejson.loads(request.raw_post_data)
+    data = json.loads(request.raw_post_data)
     
     result = apihandle.renameSystem(data['systemname'], data['newname'])
 
@@ -153,7 +177,7 @@ def sys_to_profile(request):
     Anything else becomes a complex procedure.
     This expects JSON data: { 'systemname' : name, 'profilename': name }
     """
-    data = simplejson.loads(request.raw_post_data)
+    data = json.loads(request.raw_post_data)
 
     res =  apihandle.systemToProfile(data['profilename'], data['systemname'])
     if res == True:
@@ -171,7 +195,7 @@ def list_systems(request):
 
     for x in syslist:
         res.append({ 'val' : x, 'name' : x })
-    data = simplejson.dumps(res)
+    data = json.dumps(res)
     return HttpResponse(data, mimetype='application/javascript')
 
 def get_sysip(sysrecord):
@@ -197,7 +221,7 @@ def system_array(request):
                     '<span class="action" onclick="makeProfile(\'%s\')" title="Create a profile based on this system">Create Profile</span>' % sname ])
 
         res["aaData"].append([ sname ,sprof, ipinfo, linkstr])
-    return HttpResponse(simplejson.dumps(res), mimetype="text/javascript")
+    return HttpResponse(json.dumps(res), mimetype="text/javascript")
 
 
 def list_profiles(request):
@@ -209,7 +233,7 @@ def list_profiles(request):
 
     for x in proflist:
         res.append({ 'val' : x, 'name' : x })
-    data = simplejson.dumps(res)
+    data = json.dumps(res)
     return HttpResponse(data, mimetype='application/javascript')
 
 def list_layouts(request, topdir = '/var/lib/cobbler/snippets/disklayouts'):
@@ -221,16 +245,16 @@ def list_layouts(request, topdir = '/var/lib/cobbler/snippets/disklayouts'):
         lpath = re.sub(r'%s/?' % topdir, '', base)
         for f in files:
                res.append({'name' : f, 'val' : os.path.join(lpath, f) })
-    data = simplejson.dumps(sorted(res, key=itemgetter('name')))
+    data = json.dumps(sorted(res, key=itemgetter('name')))
     return HttpResponse(data, mimetype = 'application/javascript')
 
 def dump_systems(request):
     results = allsystems()
-    return HttpResponse(simplejson.dumps(results), mimetype="text/javascript")
+    return HttpResponse(json.dumps(results), mimetype="text/javascript")
 
 def get_system(request,systemname):
     results = apihandle.systemDetails(systemname)
-    return HttpResponse(simplejson.dumps(results), mimetype="text/javascript")
+    return HttpResponse(json.dumps(results), mimetype="text/javascript")
 
 def autocomplete_systems(request):
     def iter_results(results):
@@ -244,7 +268,7 @@ def autocomplete_systems(request):
     term = request.GET.get('term')
     syslist = [ x for x in apihandle.getSystemNames() if fnmatch(x, '*%s*' % term) ]
 
-    return HttpResponse(simplejson.dumps(syslist), mimetype='text/javascript')
+    return HttpResponse(json.dumps(syslist), mimetype='text/javascript')
 
 
 def autocomplete_profiles(request):
@@ -259,11 +283,11 @@ def autocomplete_profiles(request):
     term = request.GET.get('term')
     syslist = [ x for x in apihandle.getProfileNames() if fnmatch(x, '*%s*' % term) ]
 
-    return HttpResponse(simplejson.dumps(syslist), mimetype='text/javascript')
+    return HttpResponse(json.dumps(syslist), mimetype='text/javascript')
 
 def filter_systems(request, term, systemdata):
     sysdata = sorted([ apihandle.systemSummary(x) for x in apihandle.getSystemNames() if fnmatch(x, '*%s*' % term) ], key=itemgetter('name'))
-    return HttpResponse(simplejson.dumps(sysdata), mimetype="text/javascript")
+    return HttpResponse(json.dumps(sysdata), mimetype="text/javascript")
     
 
 ## ---------- Save a disk layout ------------------ ##
@@ -271,7 +295,7 @@ def save_layout(request):
     """
     takes the JSON data posted from jQuery and tries to save it :)
     """
-    data = simplejson.loads(request.raw_post_data)
+    data = json.loads(request.raw_post_data)
     result = savelayout(data)
     if result == True:
         return HttpResponse('Layout saved')

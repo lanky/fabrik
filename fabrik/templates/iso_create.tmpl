@@ -1,16 +1,27 @@
 {% extends "main.tmpl" %}
 <!--
-############################################################################################
+# Fabrik - a custom django/javascript frontend to cobbler
 #
+# Copyright 2009-2012 Stuart Sears
+#
+# This file is part of fabrik
+#
+# fabrik is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# fabrik is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with fabrik. If not, see http://www.gnu.org/licenses/.
 #
 #       iso_create.tmpl
 #
 #       fancy new js-populated and jQuery-powered ISO generation template
-#
-#
-#
-#
-############################################################################################
 -->
 {% block title %}Fabrik - Generate Boot ISO Image{% endblock %}
 {% block scripts %}
@@ -62,3 +73,5 @@ If successfully generated, you will be given a link to the ISO image file.</p>
 <hr/>
 <button id="submit_form">Create ISO</button>
 {% endblock %}
+<!-- footer: do not edit below this line -->
+<!-- vim: set et ts=4 sts=4 sw=4 smartindent ai nu ft=xml: -->

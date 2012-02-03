@@ -1,8 +1,30 @@
 #!/usr/bin/env python
-"""
+# -*- coding: utf-8 -*-
+# Fabrik - a custom django/javascript frontend to cobbler
+#
+# Copyright 2009-2012 Stuart Sears
+#
+# This file is part of fabrik
+#
+# fabrik is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# fabrik is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with fabrik. If not, see http://www.gnu.org/licenses/.
+
+__doc__ = """
 This is the top-level configuration for Fabrik.
 The variables set in here determine how data is collected and provide defaults for some of the fields.
 """
+
+__author__ = "Stuart Sears <stuart@sjsears.com>"
 import re
 
 # pattern matching IPV4 IP Addresses
@@ -26,9 +48,9 @@ COBBLERPASS = "password"
 PRIMARY_IF  = 'eth0'
 BACKUP_IF   = 'eth1'
 DEFAULT_MASK = '255.255.255.0'
-DEFAULT_GW  = '169.82.114.1'
+DEFAULT_GW  = '192.168.1.1'
 DEFAULT_DOMAIN = 'domain.tld'
-DEFAULT_DNS = '169.82.112.62'
+DEFAULT_DNS = '192.168.1.1'
 
 ## ------------------ ISO Generation Variables ----------------- ##
 # destdir for ISO images

@@ -1,6 +1,11 @@
+README
+======
+
 This directory contains the key python code for the fabrik web interface.
 
-## key Python files
+Key Python files
+----------------
+
 * urls.py
   - maps URL patterns to functions in views.py
 
@@ -23,7 +28,8 @@ This directory contains the key python code for the fabrik web interface.
   - configuration file, mainly key = value pairs
     used by most parts of the fabrik interface.
 
-2. Templating
+Templating
+----------
 
 * templatetags/
   - files defining new tags for use in django templates.

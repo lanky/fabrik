@@ -1,5 +1,25 @@
 #!/usr/bin/env python
-"""
+# -*- coding: utf-8 -*-
+# Fabrik - a custom django/javascript frontend to cobbler
+#
+# Copyright 2009-2012 Stuart Sears
+#
+# This file is part of fabrik
+#
+# fabrik is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# fabrik is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with fabrik. If not, see http://www.gnu.org/licenses/.
+
+__doc__ = """
 forms.py
 Definitions of webforms using the django Forms library
 Each form is a class, with its own methods and properties.
@@ -22,6 +42,9 @@ the clean() method validates the entries on a form and adds errors if required. 
 returns a dict called 'cleaned_data' back to the calling 'view'
 
 """
+
+__author__ = "Stuart Sears <stuart@sjsears.com>"
+
 # generic imports
 import re
 import os
@@ -172,61 +195,61 @@ class AddSystemForm(BetterForm):
 
     # fully-qualified hostname - used as profile name, comment and dns_name
     name = forms.CharField(
-               widget = forms.TextInput(attrs = {'class':'textinput'}),
-               max_length = 50,
-               required = True,
-               help_text = "System Hostname. The first part will be the cobbler profile name.",
-               label = "Hostname")
+        widget = forms.TextInput(attrs = {'class':'textinput'}),
+        max_length = 50,
+        required = True,
+        help_text = "System Hostname. The first part will be the cobbler profile name.",
+        label = "Hostname")
 
     domain =   forms.CharField(widget = forms.TextInput(attrs = {'class':'textinput'}),
-               max_length = 50,
-               required = True,
-               initial = DEFAULT_DOMAIN,
-               help_text = "DNS domain",
-               label = "DNS Domain")
+        max_length = 50,
+        required = True,
+        initial = DEFAULT_DOMAIN,
+        help_text = "DNS domain",
+        label = "DNS Domain")
 
     reuse_name = forms.BooleanField(label="Replace existing system?",
-                 help_text = "If a system already exists using the chosen hostname (or IP Address) replace it with these details",
-                 required = False,
-                 initial = False)
+        help_text = "If a system already exists using the chosen hostname (or IP Address) replace it with these details",
+        required = False,
+        initial = False)
 
     ip_address = forms.IPAddressField(
-               widget = forms.TextInput(attrs = {'class':'textinput'}),
-               required = True,
-               help_text = "Primary IP address",
-               label = "IP Address")
+        widget = forms.TextInput(attrs = {'class':'textinput'}),
+        required = True,
+        help_text = "Primary IP address",
+        label = "IP Address")
 
 
     subnet =   forms.IPAddressField(required = True,
-               widget = forms.TextInput(attrs = {'class':'textinput'}),
-               initial = DEFAULT_MASK,
-               help_text = "Netmask (VLSN format only)",
-               label = "Subnet Mask",)
+        widget = forms.TextInput(attrs = {'class':'textinput'}),
+        initial = DEFAULT_MASK,
+        help_text = "Netmask (VLSN format only)",
+        label = "Subnet Mask",)
     # MAC Address Field (not required, but useful for PXE)
     primary_if  = forms.CharField(max_length = 18,
-                required = False,
-                help_text = "Name of primary interface",
-                label = "Primary interface",
-                initial = PRIMARY_IF)
+        required = False,
+        help_text = "Name of primary interface",
+        label = "Primary interface",
+        initial = PRIMARY_IF)
     
     gateway =  forms.IPAddressField(required = False,
-               widget = forms.TextInput(attrs = {'class':'textinput'}),
-               help_text = "Default Route",
-               initial = DEFAULT_GW,
-               label = "Gateway")
+        widget = forms.TextInput(attrs = {'class':'textinput'}),
+        help_text = "Default Route",
+        initial = DEFAULT_GW,
+        label = "Gateway")
 
     name_servers = forms.CharField(max_length = 50,
-               widget = forms.TextInput(attrs = {'class':'textinput'}),
-               required = True,
-               initial = DEFAULT_DNS,
-               help_text = "DNS Name servers. Multiple entries must be Comma or whitespace separated",
-               label = "DNS nameserver(s)")
+        widget = forms.TextInput(attrs = {'class':'textinput'}),
+        required = True,
+        initial = DEFAULT_DNS,
+        help_text = "DNS Name servers. Multiple entries must be Comma or whitespace separated",
+        label = "DNS nameserver(s)")
 
     profile =  AjaxChoiceField(choices = [('--','--')],
-               help_text = "Select an installation profile",
-               label = "Cobbler Profile",
-               required = False,
-               initial = 'lrh5v5')
+        help_text = "Select an installation profile",
+        label = "Cobbler Profile",
+        required = False,
+        initial = 'lrh5v5')
 
     disksnippet = AjaxChoiceField(
         widget = forms.Select,
@@ -243,10 +266,10 @@ class AddSystemForm(BetterForm):
         )
 
     customlayout = forms.CharField( label = "Manual Disk Layout",
-            widget = forms.Textarea(attrs = { 'wrap' : 'off', 'cols' : '60','rows' : '10', 'disabled' : 'true' } ),
-            required = False,
-            initial = 'disabled',
-            help_text = "Manually specify disk layout in anaconda/kickstart  format" )
+        widget = forms.Textarea(attrs = { 'wrap' : 'off', 'cols' : '60','rows' : '10', 'disabled' : 'true' } ),
+        required = False,
+        initial = 'disabled',
+        help_text = "Manually specify disk layout in anaconda/kickstart  format" )
 
     layout_name = forms.CharField(
         help_text = 'Filename to use if saving this layout',
@@ -256,9 +279,9 @@ class AddSystemForm(BetterForm):
 
     # ISO filename - will be generated in ISODIR (currently /var/www/html/pub for download)
     gen_iso = forms.BooleanField( label = "Generate a bootable ISO?",
-              required = False,
-              initial = False,
-              help_text = "Generate a bootable iso image for this system, called <hostname>.iso.")
+        required = False,
+        initial = False,
+        help_text = "Generate a bootable iso image for this system, called <hostname>.iso.")
 
 
     # various kickstart metadata fields...
@@ -266,9 +289,9 @@ class AddSystemForm(BetterForm):
     # Prompt for networking during installation
     # without DHCP this still requires net info above.
     skip_network = forms.BooleanField( label = "Automatically configure networking",
-            required = False,
-            initial = True,
-            help_text = "Configure networking according to the information given above. Unchecking this will mean you are prompted during installation." )
+        required = False,
+        initial = True,
+        help_text = "Configure networking according to the information given above. Unchecking this will mean you are prompted during installation." )
     # run post scripts? (default: Yes)
     skip_post = forms.BooleanField(label = 'Run Kickstart %post scripts',
         required = False,
@@ -369,34 +392,6 @@ class BuildISOForm(forms.Form):
         help_text = "choose from the list of profiles",
         )
 
+# footer. Do not edit below this line
+# vim: set et ts=4 sts=4 nu tw=0 ai smartindent ft=python:
 
-# not used at the moment.
-# class AutocompleteForm(forms.Form):
-#     """
-#     A form to capture the output of jqueryUI autocomplete boxes
-#     """
-#     system_search = forms.CharField(
-#        widget = forms.TextInput( attrs = { 'class' : 'textinput' }),
-#        required = False,
-#     )
-#     system =  forms.ChoiceField(choices = [('','')],
-#        widget = forms.TextInput( attrs = { 'class' : 'textinput' }),
-#        help_text = "Select a system",
-#        label = "System Name",
-#        initial = 'lrh5v5')
-#     profile =  forms.ChoiceField(choices = [('','')],
-#        widget = forms.TextInput( attrs = { 'class' : 'textinput' }),
-#        help_text = "Select an installation profile",
-#        label = "Cobbler Profile",
-#        initial = 'lrh5v5')
-# 
-# 
-# # not used at the moment.
-# class SystemListForm(forms.Form):
-#     """
-#     A simple search/list form
-#     """
-#     system_search = forms.CharField(
-#         widget = forms.TextInput( attrs = {'class' : 'textinput'}),
-#         required = False,
-#     )
