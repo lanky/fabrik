@@ -30,26 +30,33 @@ useful references
 Key Python files in the 'fabrik' directory
 ------------------------------------------
 * urls.py
-  maps URL patterns to functions in views.py. URL expressions are regex.
-  They pass the HTTP_REQUEST object, plus other opional parameters to the specified function.
-  an example entry looks like this:
 
+maps URL patterns to functions in views.py. URL expressions are regex.
+They pass the HTTP_REQUEST object, plus other opional parameters to the specified function.
 
-* views/
+* views
+
    The 'views' module contains 3 separate python modules for manageability.
+
   + std.py
-    contains views for listing and adding systems, plus ISO generation.
+
+ contains views for listing and adding systems, plus ISO generation.
+
   + ajax.py
-    functions that receive and send data via AJAX (mostly using JSON format)
+
+functions that receive and send data via AJAX (mostly using JSON format)
+
   + auth.py
-    currently unused authentication functionality
+
+ currently unused authentication functionality
 
 
 * forms.py
-  form definitions: fields, content, syntax-checking
-  Each form is a separate python class, inheriting from the django Forms library.
-  Django form fields do their own validation and input checking.
-  Overriding the clean() method allows you to add to this, depending on the logic of your app.
+
+form definitions: fields, content, syntax-checking
+Each form is a separate python class, inheriting from the django Forms library.
+Django form fields do their own validation and input checking.
+Overriding the clean() method allows you to add to this, depending on the logic of your app.
 
 * utils.py
   custom utility code for reuse in views
@@ -73,7 +80,7 @@ configuration file, mainly key = value pairs
 used by most parts of the fabrik interface.
 includes settings for cobbler server, plus some unused settings for integrating with puppet etc.
 
-    The key variables in here are
+The key variables in here are
     COBBLER_SERVER = 'your.cobbler.server'
     # COBBLER_SERVER = 'localhost.localdomain'
     # the interface does authenticate you, but this is more complex than you'd think, so
