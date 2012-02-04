@@ -34,27 +34,31 @@ Key Python files in the 'fabrik' directory
 maps URL patterns to functions in views.py. URL expressions are regex.
 They pass the HTTP_REQUEST object, plus other opional parameters to the specified function.
 
-* views
+### views
+
 The 'views' module contains 3 separate python modules for manageability.
 
-  + std.py
+* std.py
  contains views for listing and adding systems, plus ISO generation.
 
-  + ajax.py
+* ajax.py
 functions that receive and send data via AJAX (mostly using JSON format)
 
-  + auth.py
- currently unused authentication functionality
+* auth.py
+currently unused authentication functionality
 
 
-* forms.py
+### forms.py
+
 Django form fields do their own validation and input checking.
 Overriding the clean() method allows you to add to this, depending on the logic of your app.
 
-* utils.py
+### utils.py
+
 custom utility code for reuse in views
 
-* cobblerweb.py
+### cobblerweb.py
+
 an abstraction of some elements of the Cobbler XMLRPC API
 This includes methods to produce output in a form consumable by django
 form elements.
@@ -66,7 +70,7 @@ The actual cobbler XMLRPC api is sparsely documented, but the code lives in
 and the local api (used only for ISO image generation right now) in
 /usr/lib/python2.4/site-packages/cobbler/api.py
     
-* config.py
+### config.py
 
 configuration file, mainly key = value pairs
 used by most parts of the fabrik interface.
@@ -90,11 +94,11 @@ The key variables in here are
 Templating
 ---------
 
-* templatetags/
+### templatetags
 files defining new tags for use in django templates.
 see templatetags/README.
 Currently this is not in use, but various Django snippets and plugins can be installed to make templating easier.
 
-* templates/
+### templates
 template files used by views.py to render content.
 see templates/README
